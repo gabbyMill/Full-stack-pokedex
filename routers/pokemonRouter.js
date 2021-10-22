@@ -8,50 +8,58 @@ const returnPokemonObjFromBody = require("./helpers/pokemonObject.js");
 const validateAndGetDirLocation = require("./helpers/validation.js"); // index 0 is boolean, index 1 is dirLocation
 
 // In reality every path here is prefixed by /pokemon
-router.get("/get/:id", async (req, res) => {
-  // console.log(req.params);
-
+router.get("/get/:id", async (req, res, next) => {
   const { id } = req.params;
-  if (!+id) {
-    throw new Error(`${id} is not a number`); // this is not yet handled
-  } // ? Yea ?
-  const pokemon = await returnPokemonObjFromBody(id); // not pokemonObject.js ?
-  res.send(pokemon);
+  try {
+    const pokemon = await returnPokemonObjFromBody(id); // not pokemonObject.js ?
+    res.send(pokemon);
+    if (!+id) {
+      console.log(`${id} is not a number`); // this is not yet handled
+    }
+  } catch (error) {
+    next(error);
+  }
   // res.end(); ?
 });
 
 // In reality every path here is prefixed by /pokemon
-router.get("/query", async (req, res) => {
-  const pokemon = await returnPokemonObjFromBody(req.body.query);
-  res.send(pokemon);
-  res.end(); // needed ?
+router.get("/query", async (req, res, next) => {
+  try {
+    const pokemon = await returnPokemonObjFromBody(req.body.query);
+    res.send(pokemon);
+    res.end(); // needed ?
+  } catch (error) {
+    console.log("Problem extracting pokemon from query");
+    next(error);
+  }
 });
 
 router.put("/catch/:id", async (req, res, next) => {
   // async ?
   // next ?
   const { id } = req.params; // replace gabby with username
-  // should use try catch here ?
-  if (validateAndGetDirLocation(id)[0]) {
-    console.log(`file exists`);
-    // instruction: generate an error with 403 error code
-    res.status(403).send(`Pokemon already caught`); // should this be thrown ?
-    next(); // next ? or res.end() ?
-  } else {
-    // should use try catch here ?
-    const pokeObj = await returnPokemonObjFromBody(id);
-    try {
-      fs.writeFileSync(
-        `${validateAndGetDirLocation(id)[1]}${id}.json`,
-        JSON.stringify(pokeObj)
-      );
-      res.send(`Pokemon ${id} successfully caught`);
-    } catch (error) {
-      res.send(`Error creating pokemon ${id} file`);
-      next(error);
+  try {
+    if (validateAndGetDirLocation(id)[0]) {
+      // instruction: generate an error with 403 error code
+      next({ status: 403, message: `already caught` }); // this ok way ?
+    } else {
+      const pokeObj = await returnPokemonObjFromBody(id);
+      try {
+        fs.writeFileSync(
+          `${validateAndGetDirLocation(id)[1]}${id}.json`,
+          JSON.stringify(pokeObj)
+        );
+        res.send(`Pokemon ${id} successfully caught`);
+      } catch (error) {
+        console.log(`Error creating pokemon ${id} file`);
+        // res.send(`Error creating pokemon ${id} file`);
+        next(error);
+      }
+      // res.end(); // ?
     }
-    // res.end(); // ?
-    // next(error); ?
+  } catch (error) {
+    console.log("what will cause this error ?");
+    next(error);
   }
 });
 

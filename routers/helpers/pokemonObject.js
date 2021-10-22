@@ -2,14 +2,13 @@ var Pokedex = require("pokedex-promise-v2");
 var P = new Pokedex();
 
 async function getPokemonFromApi(pokemonName) {
-  try {
-    return await P.getPokemonByName(pokemonName); // with Promise
-  } catch (error) {
-    console.log(`Pokemon Object Helper Folder Says:\n`);
-    console.log("Error from catch: ");
-    // next(error) // ?
-    return error;
-  }
+  return await P.getPokemonByName(pokemonName); // with Promise
+  // catch (error) {
+  //   console.log(`Pokemon Object Helper Folder Says:`);
+  //   console.log("Error from catch: ");
+  //   // next(error) // ?
+  //   // return error;
+  // }
 }
 
 async function returnPokemonObjFromBody(body) {
