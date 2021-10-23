@@ -15,10 +15,8 @@ router.get('/getDetailed/:id', async (req,res,next) => {
   try {
     const pokemonData = await returnPokemonObjFromBody(id);
 
-    const abilitiesRes = await Promise.allSettled(pokemonData.abilities.map(async ({ability}) => {
-      const {name, url} = ability;
+    const abilitiesRes = await Promise.allSettled(pokemonData.abilities.map(async ({ability: {url, name}}) => {
       const axiosRes = await axios.get(url);
-      console.log(axiosRes)
       const pokemonList = axiosRes.data.pokemon.map(({pokemon}) => pokemon.name);
       return {
         name: name,
