@@ -14,9 +14,10 @@ async function getPokemonFromApi(pokemonName) {
 async function returnPokemonObjFromBody(body) {
   // helper function
   const pokemon = await getPokemonFromApi(body); // .query or .params or something
-  const { name, height, weight, types, abilities } = pokemon;
+  const { name, height, weight, types, abilities, id } = pokemon;
   const { front_default, back_default } = pokemon.sprites;
   return (pokemonObj = {
+    id
     name,
     height,
     weight,
