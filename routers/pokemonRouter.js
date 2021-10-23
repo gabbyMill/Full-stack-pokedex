@@ -126,12 +126,12 @@ router.delete("/release/:id", async (req, res, next) => {
 // later please change the places that use longFunctionNameWithArrayReturn to just use __dirname
 router.get("", (req, res, next) => {
   try {
-    let content = ""; // ugly way to pass the data ain't it ?
+    let content = []; // ugly way to pass the data ain't it ?
     const dirPath = path.join(__dirname, `../users/${username}/`);
     fs.readdirSync(dirPath).forEach(file => {
-      content += fs.readFileSync(dirPath + file, "utf-8");
+      content.push(fs.readFileSync(dirPath + file, "utf-8"))
     });
-    res.send(content);
+    res.json(content);
     // res.send("string");
   } catch (error) {
     console.log(`Error in reading users/${username} folder`);
