@@ -8,7 +8,7 @@ function userHandler(req, res, next) {
   }
 
   const userFolder = path.join(__dirname, "../users/");
-  if (!fs.readdirSync(userFolder)[0].includes(req.headers.username)) {
+  if (!fs.readdirSync(userFolder).includes(req.headers.username)) {
     fs.mkdirSync(`${userFolder}/${req.headers.username}`); // {recursive: true} not needed ?
   }
   next();
