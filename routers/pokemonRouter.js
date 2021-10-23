@@ -8,6 +8,41 @@ const returnPokemonObjFromBody = require("./helpers/pokemonObject.js");
 const validateAndGetDirLocation = require("./helpers/validation.js"); // index 0 is boolean, index 1 is dirLocation
 const username = fs.readdirSync(path.join(__dirname, "../users"))[0];
 
+router.get('/getDetailed/:id', async (req,res,next) => {
+  const {id} = req.params;
+
+  try {
+    const pokemonData = returnPokemonObjFromBody(id);
+
+    const abilitiesRes = await Promise.allSettled(pokemonData.abilities.map(async ({name, url}) => {
+      const axiosRes = await axios.get(url);
+      const pokemonList = axiosRes.data.pokemon.map(({pokemon}) => pokemon.name);
+      return {
+        name: name,
+        list: pokemonList
+      }
+    }));
+    pokemonData.abilities = abilitiesRes.filter(({status}) => status === 'fulfilled').map(({value}) => value);
+
+    const typesRes = await Promise.allSettled(pokemonData.types.map(async ({name, url}) => {
+      const axiosRes = await axios.get(url);
+      const pokemonList = axiosRes.data.pokemon.map(({pokemon}) => pokemon.name);
+      return {
+        name: name,
+        list: pokemonList
+      }
+    }));
+    pokemonData.types = typesRes.filter(({status}) => status === 'fulfilled').map(({value}) => value);
+
+    res.send(pokemonData);
+  } catch (err) {
+    if (err.isAxiosError) next({ status: 404, message: "Pokemon not found" });
+    else next(err);
+  }
+
+});
+
+
 // In reality every path here is prefixed by /pokemon
 router.get("/get/:id", async (req, res, next) => {
   const { id } = req.params;
