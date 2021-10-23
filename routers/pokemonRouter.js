@@ -12,9 +12,10 @@ router.get('/getDetailed/:id', async (req,res,next) => {
   const {id} = req.params;
 
   try {
-    const pokemonData = returnPokemonObjFromBody(id);
+    const pokemonData = await returnPokemonObjFromBody(id);
+    console.log(pokemonData);
 
-    const abilitiesRes = await Promise.allSettled(pokemonData.abilities.map(async ({name, url}) => {
+    const abilitiesRes = await Promise.allSettled(pokemonData.abilities.map(async ({ability: {name, url}}) => {
       const axiosRes = await axios.get(url);
       const pokemonList = axiosRes.data.pokemon.map(({pokemon}) => pokemon.name);
       return {
@@ -24,7 +25,7 @@ router.get('/getDetailed/:id', async (req,res,next) => {
     }));
     pokemonData.abilities = abilitiesRes.filter(({status}) => status === 'fulfilled').map(({value}) => value);
 
-    const typesRes = await Promise.allSettled(pokemonData.types.map(async ({name, url}) => {
+    const typesRes = await Promise.allSettled(pokemonData.types.map(async ({type:{name, url}}) => {
       const axiosRes = await axios.get(url);
       const pokemonList = axiosRes.data.pokemon.map(({pokemon}) => pokemon.name);
       return {
