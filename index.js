@@ -4,7 +4,7 @@ const pokemonRouter = require("./routers/pokemonRouter.js");
 const userHandler = require("./middleware/userHandler.js");
 const errorHandler = require("./middleware/errorHandler.js");
 const app = express();
-const port = 8080;
+const port = 3000;
 
 var cors = require("cors");
 app.use(cors());

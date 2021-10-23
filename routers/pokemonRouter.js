@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const router = express.Router();
+const axios = require('axios');
 var Pokedex = require("pokedex-promise-v2");
 var P = new Pokedex();
 const returnPokemonObjFromBody = require("./helpers/pokemonObject.js");
@@ -13,10 +14,11 @@ router.get('/getDetailed/:id', async (req,res,next) => {
 
   try {
     const pokemonData = await returnPokemonObjFromBody(id);
-    console.log(pokemonData);
 
-    const abilitiesRes = await Promise.allSettled(pokemonData.abilities.map(async ({ability: {name, url}}) => {
+    const abilitiesRes = await Promise.allSettled(pokemonData.abilities.map(async ({ability}) => {
+      const {name, url} = ability;
       const axiosRes = await axios.get(url);
+      console.log(axiosRes)
       const pokemonList = axiosRes.data.pokemon.map(({pokemon}) => pokemon.name);
       return {
         name: name,
