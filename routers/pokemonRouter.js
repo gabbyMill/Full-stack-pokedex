@@ -6,6 +6,7 @@ var Pokedex = require("pokedex-promise-v2");
 var P = new Pokedex();
 const returnPokemonObjFromBody = require("./helpers/pokemonObject.js");
 const validateAndGetDirLocation = require("./helpers/validation.js"); // index 0 is boolean, index 1 is dirLocation
+const username = fs.readdirSync(path.join(__dirname, "../users"))[0];
 
 // In reality every path here is prefixed by /pokemon
 router.get("/get/:id", async (req, res, next) => {
@@ -17,6 +18,9 @@ router.get("/get/:id", async (req, res, next) => {
       console.log(`${id} is not a number`); // this is not yet handled
     }
   } catch (error) {
+    if (error.isAxiosError) {
+      next({ status: 404, message: `Pokemont not found` });
+    }
     next(error);
   }
   // res.end(); ?
@@ -29,6 +33,9 @@ router.get("/query", async (req, res, next) => {
     res.send(pokemon);
     res.end(); // needed ?
   } catch (error) {
+    if (error.isAxiosError) {
+      next({ status: 404, message: `Pokemont not found` });
+    }
     console.log("Problem extracting pokemon from query");
     next(error);
   }
@@ -37,7 +44,7 @@ router.get("/query", async (req, res, next) => {
 router.put("/catch/:id", async (req, res, next) => {
   // async ?
   // next ?
-  const { id } = req.params; // replace gabby with username
+  const { id } = req.params;
   try {
     if (validateAndGetDirLocation(id)[0]) {
       // instruction: generate an error with 403 error code
@@ -83,17 +90,15 @@ router.delete("/release/:id", async (req, res, next) => {
 // later please change the places that use longFunctionNameWithArrayReturn to just use __dirname
 router.get("", (req, res, next) => {
   try {
-    // currently files are sorted by default way of js
-    // change gabby to username
     let content = ""; // ugly way to pass the data ain't it ?
-    const dirPath = path.join(__dirname, "../users/gabby/");
+    const dirPath = path.join(__dirname, `../users/${username}/`);
     fs.readdirSync(dirPath).forEach(file => {
       content += fs.readFileSync(dirPath + file, "utf-8");
     });
     res.send(content);
     // res.send("string");
   } catch (error) {
-    console.log("Error in reading users/gabby folder");
+    console.log(`Error in reading users/${username} folder`);
     next(error);
   }
   // res.end(); // no need for this ?
