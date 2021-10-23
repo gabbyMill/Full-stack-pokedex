@@ -17,14 +17,14 @@ async function returnPokemonObjFromBody(body) {
   const { name, height, weight, types, abilities, id } = pokemon;
   const { front_default, back_default } = pokemon.sprites;
   return (pokemonObj = {
-    id
+    id,
     name,
     height,
     weight,
     types,
     front_pic: front_default,
     back_pic: back_default,
-    abilities,
+    abilities
   });
 }
 
