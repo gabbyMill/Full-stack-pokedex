@@ -80,16 +80,17 @@ router.get("/query", async (req, res, next) => {
 router.put("/catch/:id", async (req, res, next) => {
   // async ?
   // next ?
+  const {username} = req;
   const { id } = req.params;
   try {
-    if (validateAndGetDirLocation(id)[0]) {
+    if (validateAndGetDirLocation(username,id)[0]) {
       // instruction: generate an error with 403 error code
       next({ status: 403, message: `already caught` }); // this ok way ?
     } else {
       const pokeObj = await returnPokemonObjFromBody(id);
       try {
         fs.writeFileSync(
-          `${validateAndGetDirLocation(id)[1]}${id}.json`,
+          `${validateAndGetDirLocation(username,id)[1]}${id}.json`,
           JSON.stringify(pokeObj)
         );
         res.send(`Pokemon ${id} successfully caught`);
@@ -108,10 +109,11 @@ router.put("/catch/:id", async (req, res, next) => {
 
 router.delete("/release/:id", async (req, res, next) => {
   const { id } = req.params;
-  if (validateAndGetDirLocation(id)[0]) {
+  const {username} = req;
+  if (validateAndGetDirLocation(username,id)[0]) {
     // try catch before unlinkSync ? why shouldn't it work ?
     try {
-      fs.unlinkSync(`${validateAndGetDirLocation(id)[1]}${id}.json`);
+      fs.unlinkSync(`${validateAndGetDirLocation(username,id)[1]}${id}.json`);
       res.send(`Pokemon ${id} deleted successfully`); // res.json or res.send ?
       next(); // next or res.end ?
     } catch (error) {
@@ -125,6 +127,7 @@ router.delete("/release/:id", async (req, res, next) => {
 
 // later please change the places that use longFunctionNameWithArrayReturn to just use __dirname
 router.get("", (req, res, next) => {
+  const {username} = req;
   try {
     let content = []; // ugly way to pass the data ain't it ?
     const dirPath = path.join(__dirname, `../users/${username}/`);
