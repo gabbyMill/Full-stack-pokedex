@@ -1,18 +1,12 @@
 const fs = require("fs");
 const path = require("path");
 
-function userHandler(req, res, next) {
-  console.log("user handler");
-  if (!req.headers.username) {
-    next({ status: 401, message: "Missing username header" });
-  }
+module.exports.userHandler = function (req, res, next) {
+  const { username } = req.headers;
+  if (!username) throw { status: 401, message: "No username" };
 
-  req.username = req.headers.username;
-  const userFolder = path.join(__dirname, "../users/");
-  if (!fs.readdirSync(userFolder).includes(req.headers.username)) {
-    fs.mkdirSync(`${userFolder}/${req.headers.username}`); // {recursive: true} not needed ?
-  }
+  const userPath = path.resolve(path.join("./users", username));
+  if (!fs.existsSync(userPath)) fs.mkdirSync(userPath);
+  req.username = username;
   next();
-}
-
-module.exports = userHandler;
+};

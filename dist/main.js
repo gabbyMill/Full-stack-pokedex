@@ -811,7 +811,12 @@
                     case 0:
                       return (
                         (t.next = 2),
-                        axios.get("https://pokeapi.co/api/v2/type/".concat(e))
+                        axios.get(
+                          "https://pokeapi.co/api/v2/type/".concat(
+                            document.querySelector(".search-bar").value
+                          )
+                        )
+                        // name
                       );
                     case 2:
                       if (
@@ -830,6 +835,7 @@
                       return (
                         (t.next = 11),
                         axios.get("https://pokeapi.co/api/v2/type/".concat(n))
+                        // type ?
                       );
                     case 11:
                       return (
