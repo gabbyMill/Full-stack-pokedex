@@ -5,6 +5,12 @@ const userHandler = require("./middleware/userHandler.js");
 const errorHandler = require("./middleware/errorHandler.js");
 const app = express();
 const path = require("path");
+const fs = require("fs");
+
+if (!fs.existsSync("./users")) {
+  // .includes(req.headers.username)
+  fs.mkdirSync("users"); // {recursive: true} not needed ?
+}
 
 var cors = require("cors");
 app.use(cors());
