@@ -140,7 +140,10 @@ router.get("", (req, res, next) => {
   const { username } = req;
   try {
     let content = []; // ugly way to pass the data ain't it ?
-    const dirPath = path.join(__dirname, `../users/${username}/`);
+    // const dirPath = path.join(__dirname, `../users/${username}/`);
+    const dirPath2 = path.resolve("./dist");
+    // console.log(dirPath2);
+    const dirPath = dirPath2 + `/users/${username}/`;
     fs.readdirSync(dirPath).forEach(file => {
       content.push(fs.readFileSync(dirPath + file, "utf-8"));
     });
