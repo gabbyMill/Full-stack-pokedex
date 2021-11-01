@@ -5,7 +5,6 @@ const userHandler = require("./middleware/userHandler.js");
 const errorHandler = require("./middleware/errorHandler.js");
 const app = express();
 const path = require("path");
-const port = process.env.PORT || 3000;
 
 app.use("/", express.static(path.resolve("./dist"))); // serve main path as static dir
 app.get("/", function (req, res) {
