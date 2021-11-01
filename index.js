@@ -4,7 +4,6 @@ const pokemonRouter = require("./routers/pokemonRouter.js");
 const userHandler = require("./middleware/userHandler.js");
 const errorHandler = require("./middleware/errorHandler.js");
 const app = express();
-const path = require("path");
 
 var cors = require("cors");
 app.use(cors());
@@ -19,4 +18,7 @@ app.get("/", function (req, res) {
   res.sendFile(path.resolve("./dist/index.html"));
 });
 
-app.listen(process.env.PORT || 3000, () => console.log("Server is running..."));
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server is running...");
+  console.log("gabby", env.PORT);
+});
