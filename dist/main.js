@@ -110,7 +110,7 @@
                     (i = +n ? n : n.toLowerCase()),
                     (t.next = 8),
                     axios.get(
-                      "https://infinite-wildwood-48742.herokuapp.com//pokemon/get/".concat(
+                      "https://infinite-wildwood-48742.herokuapp.com/pokemon/get/".concat(
                         i
                       ),
                       {
@@ -212,7 +212,7 @@
                   n.target.classList.add("caught"),
                   (t.next = 4),
                   axios.get(
-                    "https://infinite-wildwood-48742.herokuapp.com//pokemon/get/".concat(
+                    "https://infinite-wildwood-48742.herokuapp.com/pokemon/get/".concat(
                       i.value
                     ),
                     {
@@ -228,7 +228,7 @@
                   (o = t.sent),
                   (t.next = 7),
                   axios.put(
-                    "https://infinite-wildwood-48742.herokuapp.com//pokemon/catch/".concat(
+                    "https://infinite-wildwood-48742.herokuapp.com/pokemon/catch/".concat(
                       "" + i.value
                     ),
                     { pokemon: { pokemonName: o.data.name } },
@@ -248,7 +248,7 @@
                   document.querySelector(".catch").classList.remove("caught"),
                   (t.next = 14),
                   axios.delete(
-                    "https://infinite-wildwood-48742.herokuapp.com//pokemon/release/".concat(
+                    "https://infinite-wildwood-48742.herokuapp.com/pokemon/release/".concat(
                       "" + r
                     ),
                     {
@@ -424,7 +424,7 @@
                     : (s[2].textContent = ""),
                   (t.next = 3),
                   axios.get(
-                    "https://infinite-wildwood-48742.herokuapp.com//pokemon/",
+                    "https://infinite-wildwood-48742.herokuapp.com/pokemon/",
                     {
                       headers: {
                         "Content-Type": "application/json",
@@ -443,7 +443,7 @@
                 return (
                   (t.next = 9),
                   axios.get(
-                    "https://infinite-wildwood-48742.herokuapp.com//pokemon/get/".concat(
+                    "https://infinite-wildwood-48742.herokuapp.com/pokemon/get/".concat(
                       a.data[c]
                     ),
                     {
