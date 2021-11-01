@@ -1,3 +1,19 @@
+function r(e) {
+  return function () {
+    var t = this,
+      r = arguments;
+    return new Promise(function (a, o) {
+      var c = e.apply(t, r);
+      function s(e) {
+        n(c, a, o, s, u, "next", e);
+      }
+      function u(e) {
+        n(c, a, o, s, u, "throw", e);
+      }
+      s(void 0);
+    });
+  };
+}
 var p = (function () {
   var t = r(
     regeneratorRuntime.mark(function t(n, r, o) {
@@ -143,6 +159,7 @@ var p = (function () {
     for (var n = 0, r = new Array(t); n < t; n++) r[n] = e[n];
     return r;
   }
+
   function n(e, t, n, r, a, o, c) {
     try {
       var s = e[o](c),
@@ -151,22 +168,6 @@ var p = (function () {
       return void n(e);
     }
     s.done ? t(u) : Promise.resolve(u).then(r, a);
-  }
-  function r(e) {
-    return function () {
-      var t = this,
-        r = arguments;
-      return new Promise(function (a, o) {
-        var c = e.apply(t, r);
-        function s(e) {
-          n(c, a, o, s, u, "next", e);
-        }
-        function u(e) {
-          n(c, a, o, s, u, "throw", e);
-        }
-        s(void 0);
-      });
-    };
   }
   var a = document.querySelector(".welcome"),
     o =
