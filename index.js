@@ -4,6 +4,7 @@ const pokemonRouter = require("./routers/pokemonRouter.js");
 const userHandler = require("./middleware/userHandler.js");
 const errorHandler = require("./middleware/errorHandler.js");
 const app = express();
+const path = require("path");
 
 var cors = require("cors");
 app.use(cors());
@@ -12,8 +13,8 @@ app.use("/user", userRouter);
 app.use("/pokemon", userHandler, pokemonRouter);
 app.use(errorHandler);
 
-app.use("", express.static(path.resolve("./dist"))); // serve main path as static dir
-app.get("", function (req, res) {
+app.use("/", express.static(path.resolve("./dist"))); // serve main path as static dir
+app.get("/", function (req, res) {
   // serve main path as static file
   res.sendFile(path.resolve("./dist/index.html"));
 });
