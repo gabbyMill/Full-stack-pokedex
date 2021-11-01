@@ -1,3 +1,108 @@
+var p = (function () {
+  var t = r(
+    regeneratorRuntime.mark(function t(n, r, o) {
+      var c, i, p, d, m, h, v, x, b, k, w, L, C;
+      return regeneratorRuntime.wrap(
+        function (t) {
+          for (;;)
+            switch ((t.prev = t.next)) {
+              case 0:
+                return (
+                  (t.prev = 0),
+                  (c = document.querySelector(".catch")) &&
+                    e(c.classList).includes("caught") &&
+                    c.classList.remove("caught"),
+                  a.classList.remove("alert"),
+                  (a.textContent = "Good to see you ".concat(
+                    r,
+                    "\nEnjoy the Pokédex"
+                  )),
+                  (i = +n ? n : n.toLowerCase()),
+                  (t.next = 8),
+                  axios.get(
+                    "https://infinite-wildwood-48742.herokuapp.com/pokemon/get/".concat(
+                      i
+                    ),
+                    {
+                      headers: {
+                        "Content-Type": "application/json",
+                        username: r,
+                      },
+                    }
+                  )
+                );
+              case 8:
+                if (
+                  ((p = t.sent),
+                  e(s[2].classList).includes("displaying") ||
+                    g(p.data.id, l.value),
+                  (d = p.data),
+                  (m = d.name),
+                  (h = d.height),
+                  (v = d.weight),
+                  (x = d.types),
+                  d.back_pic,
+                  (b = d.front_pic),
+                  !(x.length < 2))
+                ) {
+                  t.next = 17;
+                  break;
+                }
+                return (t.next = 14), y(x[0].name);
+              case 14:
+                (k = t.sent), (t.next = 20);
+                break;
+              case 17:
+                return (t.next = 19), y(x[0].name, x[1].name);
+              case 19:
+                k = t.sent;
+              case 20:
+                for (
+                  document.querySelector(".catch") ||
+                    document
+                      .querySelector(".buttons")
+                      .append(
+                        f("catch", "button", [p.data, r]),
+                        f("release", "button", [p.data, r])
+                      ),
+                    u.append(
+                      f(m, "div", p.data),
+                      f(h, "div", p.data),
+                      f(v, "div", p.data),
+                      f(b, "img", p.data),
+                      f(x, "div", k)
+                    ),
+                    w = document.querySelector(".dropdown-menu3"),
+                    L = w.children,
+                    C = 0;
+                  C < L.length;
+                  C++
+                )
+                  L[C].textContent === m && console.log("equals to n");
+                t.next = 33;
+                break;
+              case 27:
+                (t.prev = 27),
+                  (t.t0 = t.catch(0)),
+                  (u.textContent = ""),
+                  console.log(t.t0),
+                  a.classList.add("alert"),
+                  (a.textContent = "Wrong pokemon name/number \nTry again");
+              case 33:
+              case "end":
+                return t.stop();
+            }
+        },
+        t,
+        null,
+        [[0, 27]]
+      );
+    })
+  );
+  return function (e, n, r) {
+    return t.apply(this, arguments);
+  };
+})();
 (() => {
   function e(e) {
     return (
@@ -88,111 +193,6 @@
     l.addEventListener("keydown", function (e) {
       "Enter" === e.key && p(i.value, l.value);
     });
-  var p = (function () {
-    var t = r(
-      regeneratorRuntime.mark(function t(n, r, o) {
-        var c, i, p, d, m, h, v, x, b, k, w, L, C;
-        return regeneratorRuntime.wrap(
-          function (t) {
-            for (;;)
-              switch ((t.prev = t.next)) {
-                case 0:
-                  return (
-                    (t.prev = 0),
-                    (c = document.querySelector(".catch")) &&
-                      e(c.classList).includes("caught") &&
-                      c.classList.remove("caught"),
-                    a.classList.remove("alert"),
-                    (a.textContent = "Good to see you ".concat(
-                      r,
-                      "\nEnjoy the Pokédex"
-                    )),
-                    (i = +n ? n : n.toLowerCase()),
-                    (t.next = 8),
-                    axios.get(
-                      "https://infinite-wildwood-48742.herokuapp.com/pokemon/get/".concat(
-                        i
-                      ),
-                      {
-                        headers: {
-                          "Content-Type": "application/json",
-                          username: r,
-                        },
-                      }
-                    )
-                  );
-                case 8:
-                  if (
-                    ((p = t.sent),
-                    e(s[2].classList).includes("displaying") ||
-                      g(p.data.id, l.value),
-                    (d = p.data),
-                    (m = d.name),
-                    (h = d.height),
-                    (v = d.weight),
-                    (x = d.types),
-                    d.back_pic,
-                    (b = d.front_pic),
-                    !(x.length < 2))
-                  ) {
-                    t.next = 17;
-                    break;
-                  }
-                  return (t.next = 14), y(x[0].name);
-                case 14:
-                  (k = t.sent), (t.next = 20);
-                  break;
-                case 17:
-                  return (t.next = 19), y(x[0].name, x[1].name);
-                case 19:
-                  k = t.sent;
-                case 20:
-                  for (
-                    document.querySelector(".catch") ||
-                      document
-                        .querySelector(".buttons")
-                        .append(
-                          f("catch", "button", [p.data, r]),
-                          f("release", "button", [p.data, r])
-                        ),
-                      u.append(
-                        f(m, "div", p.data),
-                        f(h, "div", p.data),
-                        f(v, "div", p.data),
-                        f(b, "img", p.data),
-                        f(x, "div", k)
-                      ),
-                      w = document.querySelector(".dropdown-menu3"),
-                      L = w.children,
-                      C = 0;
-                    C < L.length;
-                    C++
-                  )
-                    L[C].textContent === m && console.log("equals to n");
-                  t.next = 33;
-                  break;
-                case 27:
-                  (t.prev = 27),
-                    (t.t0 = t.catch(0)),
-                    (u.textContent = ""),
-                    console.log(t.t0),
-                    a.classList.add("alert"),
-                    (a.textContent = "Wrong pokemon name/number \nTry again");
-                case 33:
-                case "end":
-                  return t.stop();
-              }
-          },
-          t,
-          null,
-          [[0, 27]]
-        );
-      })
-    );
-    return function (e, n, r) {
-      return t.apply(this, arguments);
-    };
-  })();
   function d(e, t, n) {
     return m.apply(this, arguments);
   }
