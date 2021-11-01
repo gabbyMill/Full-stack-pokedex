@@ -7,7 +7,7 @@ var Pokedex = require("pokedex-promise-v2");
 var P = new Pokedex();
 const returnPokemonObjFromBody = require("./helpers/pokemonObject.js");
 const validateAndGetDirLocation = require("./helpers/validation.js"); // index 0 is boolean, index 1 is dirLocation
-// const username = fs.readdirSync(path.join(__dirname, "../users"))[0];
+const username = fs.readdirSync(path.resolve("./users"))[0];
 
 router.get("/getDetailed/:id", async (req, res, next) => {
   const { id } = req.params;
