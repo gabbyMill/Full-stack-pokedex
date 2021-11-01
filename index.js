@@ -5,6 +5,7 @@ const userHandler = require("./middleware/userHandler.js");
 const errorHandler = require("./middleware/errorHandler.js");
 const app = express();
 const path = require("path");
+const port = process.env.PORT || 3000;
 
 var cors = require("cors");
 app.use(cors());
